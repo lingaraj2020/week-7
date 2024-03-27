@@ -1,4 +1,4 @@
-import { lazy, useState } from "react";
+import { Suspense, lazy, useState } from "react";
 import React from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
@@ -16,14 +16,14 @@ const Landing = React.lazy(() => import("./components/Landing"));
 function App() {
 
   //suspense API
-  
+
   return (
     <div>
       <BrowserRouter>
       <Appbar/>
         <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/" element={<Landing />} />
+          <Route path="/dashboard" element={<Suspense fallback={"loading..."}><Dashboard /></Suspense>} />
+          <Route path="/" element={<Suspense fallback={"loading..."}><Landing/></Suspense>} />
         </Routes>
       </BrowserRouter>
     </div>
