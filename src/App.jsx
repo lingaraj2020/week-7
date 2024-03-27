@@ -16,6 +16,7 @@ const Landing = React.lazy(() => import("./components/Landing"));
 function App() {
 
   //suspense API
+  
   return (
     <div>
       <BrowserRouter>
