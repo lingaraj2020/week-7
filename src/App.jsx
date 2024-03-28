@@ -1,56 +1,38 @@
 import { Suspense, lazy, useState } from "react";
-import React from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-import {
-  BrowserRouter,
-  Route,
-  Router,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
-const Dashboard = React.lazy(() => import("./components/Dashboard"));
-const Landing = React.lazy(() => import("./components/Landing"));
 
 function App() {
-
-  //suspense API
+  const [count, setCount] = useState(0);
 
   return (
     <div>
-      <BrowserRouter>
-      <Appbar/>
-        <Routes>
-          <Route path="/dashboard" element={<Suspense fallback={"loading..."}><Dashboard /></Suspense>} />
-          <Route path="/" element={<Suspense fallback={"loading..."}><Landing/></Suspense>} />
-        </Routes>
-      </BrowserRouter>
+      <Count count={count} setCount={setCount}/>
     </div>
   );
 }
 
-function Appbar() {
-  const navigate = useNavigate();
+function Count({ count ,setCount}) {
+  return <div>
+    <CountRender count={count}/>
+    <Buttons count={count} setCount={setCount}/>
+    </div>;
+}
+
+function CountRender({count}){
+  return <div>
+    {count}
+  </div>
+}
+function Buttons({count,setCount}) {
   return (
     <div>
-      <div style={{ background: "black", padding: "10px", color: "white" }}>
-        <button
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          Landing
-        </button>
-        <button
-          onClick={() => {
-            navigate("/dashboard");
-          }}
-        >
-          Dashboard
-        </button>
-      </div>
+      <button onClick={() => {
+        setCount(count+1);
+      }}>Increase</button>
+      <button onClick={() => {
+        setCount(count-1);
+      }}>Decrease</button>
     </div>
   );
 }
+
 export default App;
