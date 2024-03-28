@@ -1,28 +1,38 @@
-import { Suspense, lazy, useState } from "react";
+import { Suspense, lazy, useContext, useState } from "react";
+import { CountContext, setCountContext } from "./context";
 
 function App() {
   const [count, setCount] = useState(0);
 
+  //wrap anyone that wants to use teleported value inside provider
   return (
     <div>
-      <Count count={count} setCount={setCount}/>
+      <CountContext.Provider value={count}>
+        <setCountContext.Provider value={setCount}>
+        <Count setCount={setCount}/>
+        </setCountContext.Provider>
+      </CountContext.Provider>
     </div>
   );
 }
 
-function Count({ count ,setCount}) {
+function Count() {
   return <div>
-    <CountRender count={count}/>
-    <Buttons count={count} setCount={setCount}/>
+    <CountRender/>
+    <Buttons />
     </div>;
 }
 
-function CountRender({count}){
+function CountRender(){
+  const count=useContext(CountContext);
+
   return <div>
     {count}
   </div>
 }
-function Buttons({count,setCount}) {
+function Buttons() {
+  const count=useContext(CountContext);
+  const setCount=useContext(setCountContext);
   return (
     <div>
       <button onClick={() => {
