@@ -8,8 +8,10 @@ function App() {
   return (
     <div>
       <CountContext.Provider value={count}>
+
         <setCountContext.Provider value={setCount}>
         <Count setCount={setCount}/>
+        
         </setCountContext.Provider>
       </CountContext.Provider>
     </div>
