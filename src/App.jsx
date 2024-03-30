@@ -1,19 +1,16 @@
-import { Suspense, lazy, useContext, useState } from "react";
+import {  useContext } from "react";
 import { CountContext, setCountContext } from "./context";
+import { RecoilRoot, useRecoilState, useRecoilValue } from "recoil";
+import { countAtom } from "./store/atoms/count";
 
 function App() {
-  const [count, setCount] = useState(0);
 
   //wrap anyone that wants to use teleported value inside provider
   return (
     <div>
-      <CountContext.Provider value={count}>
-
-        <setCountContext.Provider value={setCount}>
-        <Count setCount={setCount}/>
-        
-        </setCountContext.Provider>
-      </CountContext.Provider>
+      <RecoilRoot>
+        <Count />
+      </RecoilRoot>
     </div>
   );
 }
@@ -26,15 +23,17 @@ function Count() {
 }
 
 function CountRender(){
-  const count=useContext(CountContext);
+  const count=useRecoilValue(countAtom);
 
   return <div>
+    <b>
     {count}
+    </b>
   </div>
 }
 function Buttons() {
-  const count=useContext(CountContext);
-  const setCount=useContext(setCountContext);
+  const [count,setCount]=useRecoilState(countAtom); 
+
   return (
     <div>
       <button onClick={() => {
